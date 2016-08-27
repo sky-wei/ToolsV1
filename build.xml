@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Tools" default="Compiled" basedir=".">
+	
+	<property name="src" value="./src" />
+	<property name="classes" value="./classes" />
+	<property name="rootPath" value="./build" />
+	
+	<property name="classpath" value=".;lib/chardet-1.0.jar;lib/cpdatector_1.0.10.jar;lib/dom4j-1.6.1.jar;lib/log4j-1.2.17.jar;lib/nimrodlf.jar;lib/sqlite-jdbc.jar" />
+	<property name="manifest.classpath" value=". lib/chardet-1.0.jar lib/cpdatector_1.0.10.jar lib/dom4j-1.6.1.jar lib/log4j-1.2.17.jar lib/nimrodlf.jar lib/sqlite-jdbc.jar" />
+	
+	<target name="CreateDir">
+		<delete file="Tools.zip" />
+		
+		<mkdir dir="${classes}"/>
+		<mkdir dir="${rootPath}"/>
+		<mkdir dir="${rootPath}/lib"/>
+		
+		<copyfile dest="${classes}/log4j.properties" src="${src}/log4j.properties"/>
+		<copyfile dest="${rootPath}/Run.bat" src="./run.bat"/>
+		<!-- <copyfile dest="${rootPath}/使用说明.docx" src="./使用说明.docx"/> -->
+		<copydir dest="${rootPath}/res" src="res"/>
+		<copydir dest="${rootPath}/toolsBin" src="toolsBin"/>
+		<copydir dest="${rootPath}/lib" src="lib" />
+	</target>
+	
+	<target name="Compiled" depends="CreateDir">
+		<manifest file="MANIFEST.MF">
+			<attribute name="Built-By" value="jingcai.wei" />
+			<attribute name="Specification-Title" value="Tools" />
+			<attribute name="Implementation-Version" value="1.2" />
+			<attribute name="Main-Class" value="com.wei.main.AppMain"/>
+			<attribute name="Class-Path" value="${manifest.classpath}" />
+		</manifest>
+		
+		<javac includeantruntime="on" srcdir="${src}" destdir="${classes}" classpath="${classpath}" />
+		
+		<jar jarfile="${rootPath}/AnalysisTool.jar" basedir="${classes}" manifest="MANIFEST.MF" />
+		
+		<zip destfile="./Tools.zip" basedir="${rootPath}" />
+		
+		<delete file="MANIFEST.MF" />
+		<delete dir="${classes}" />
+		<delete dir="${rootPath}" />
+	</target>
+</project>
