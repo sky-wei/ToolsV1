@@ -1,5 +1,5 @@
-# APK Tools
-Java图形界面的APK反编译工具
+## APK Tools - Java图形界面的APK反编译工具
+
 ![主界面](screenshot/home_page.jpg)
 
 
